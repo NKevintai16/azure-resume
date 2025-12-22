@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+
+html {
+  background: #f4f4f6;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 900px;
+  margin: 24px auto;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.08);
+  border-radius: 6px;
+  color: #222;
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+  padding: 10px;
+}
+
+.left {
+  width: 25%;
+  border-right: 1px solid #ccc;
+}
+
+.right {
+  width: 75%;
+}
+
+/* Responsive: stack columns on small screens */
+@media (max-width: 700px) {
+  .row {
+    flex-direction: column;
+  }
+  .left,
+  .right {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e6e6e6;
+  }
+}
+
+
+ul.no-bullets{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+h3{
+	margin-top: 5px;
+    margin-bottom: 5px;
+}
