@@ -1,6 +1,3 @@
-using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Data.Common;
 using System.Net;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -21,7 +18,7 @@ namespace api
             _logger = loggerFactory.CreateLogger<GetResumeCounter>();
 
             _cosmosClient = new CosmosClient(Environment.GetEnvironmentVariable("AzureResumeConnectionString"));
-            _container = _cosmosClient.GetDatabase("resumeapidb").GetContainer("Counter");
+            _container = _cosmosClient.GetDatabase("resume-database").GetContainer("Container");
         }
 
         [Function("GetResumeCounter")]
@@ -37,7 +34,7 @@ namespace api
 
             try
             {
-                var itemResponse = await _container.ReadItemAsync<dynamic>("visitor-counter-id", new PartitionKey("visitor-counter-pk"));
+                var itemResponse = await _container.ReadItemAsync<dynamic>("1", new PartitionKey("1"));
                 var count = itemResponse.Resource.count;
                 response.WriteString($"{{ \"count\": {count} }}");
             }
