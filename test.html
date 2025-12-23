@@ -2,14 +2,25 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kevin Nguyen — Full-Stack Dev</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="row">
+<header class="hero" id="Home">
+  <div class="hero__content">
+    <img src="frontend/images/KevinFirst.jpg" alt="Kevin smiling" class="intro__img">
+    <h1 class="section__title section__title--intro">Hi, I&#39;m <strong>Kevin Nguyen</strong></h1>
+    <p class="section__subtitle section__subtitle--intro">IT Professional</p>
+    <div class="hero__cta">
+      <div class="view-counter btn" id="viewCounter" aria-live="polite">This page has been viewed <span id="counter">0</span> times</div>
+    </div>
+  </div>
+</header>
+<section id="resume"><div class="row">
   <div class="column left">
     <h2>Thai Tai Kevin Nguyen</h2>
     <br>
-    <h3>Contact</h3>
+    <h3 id="contact">Contact</h3>
     <hr>
     <ul class= "no-bullets">
     	<li>(512) 623-0921</li>
@@ -84,5 +95,25 @@
 		<li>Supporting the deployment of new software features and system functionality for 2,500+ users across multiple airports, coordinating end-user training, and lowering escalations by 40% while communicating user feedback to engineering teams to enhance product usability.</li>
     </ul>
   </div>
+</section>
+
+<script>
+  // Simple per-browser page view counter using localStorage
+  (function(){
+    try {
+      const key = 'page_views_test_html'; // unique per page/file
+      const el = document.getElementById('counter');
+      if (!el) return;
+      const previous = parseInt(localStorage.getItem(key), 10) || 0;
+      const count = previous + 1;
+      localStorage.setItem(key, count);
+      el.textContent = count.toLocaleString();
+    } catch (e) {
+      // fail silently
+      console.error(e);
+    }
+  })();
+</script>
+
 </body>
 </html>

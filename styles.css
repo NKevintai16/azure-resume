@@ -61,3 +61,67 @@ h3{
 	margin-top: 5px;
     margin-bottom: 5px;
 }
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Top navigation */
+.topnav {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 10px 0 20px;
+  gap: 12px;
+}
+.topnav .logo { font-weight:700; text-decoration:none; color:#222; }
+.topnav .nav-links a { margin-left: 12px; text-decoration:none; color:#333; }
+
+/* Hero */
+.hero {
+  text-align:center;
+  padding: 28px 12px;
+  background: linear-gradient(180deg, #fff 0%, #f9fafb 100%);
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+.hero__content { max-width:700px; margin:0 auto; }
+.intro__img {
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+  margin: 0 auto 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.section__title--intro { font-size: 2rem; margin: 0 0 8px; }
+.section__subtitle--intro { font-size:1.05rem; color:#555; margin-bottom: 12px; }
+
+/* Buttons */
+.btn {
+  display:inline-block;
+  padding: 10px 16px;
+  margin: 6px;
+  background:#2563eb;
+  color:#fff;
+  text-decoration:none;
+  border-radius:6px;
+}
+.btn--secondary { background:#6b7280; }
+
+/* Make resume section distinct */
+#resume { padding-top: 6px; }
+
+/* Responsive tweaks */
+@media (max-width:700px) {
+  .intro__img { width:120px; height:120px; }
+  .section__title--intro { font-size:1.6rem;}
+  .left { border-right:none; border-bottom:none; }
+  .hero { padding:22px 10px; }
+  .topnav .nav-links { display:flex; gap:8px;}
+}
+
+/* View counter styling */
+.view-counter { cursor: default; }
+.view-counter #counter { font-weight:700; margin: 0 6px; }
