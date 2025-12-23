@@ -35,8 +35,12 @@ namespace api
             try
             {
                 var itemResponse = await _container.ReadItemAsync<dynamic>("1", new PartitionKey("1"));
-                var count = itemResponse.Resource.count;
-                response.WriteString($"{{ \"count\": {count} }}");
+                var item = itemResponse.Resource;
+                item.count += 1;
+
+                await _container.ReplaceItemAsync(item, "1", new PartitionKey("1"));
+
+                response.WriteString($"{{ \"count\": {item.count} }}");
             }
             catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
             {
