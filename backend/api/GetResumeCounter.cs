@@ -1,23 +1,51 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using System.Collections.ObjectModel;
+using System.Configuration;
+using System.Data.Common;
+using System.Net;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Azure.Cosmos;
+using System.Threading.Tasks;
 
-namespace Company.Function;
-
-public class GetResumeCounter
+namespace api
 {
-    private readonly ILogger<GetResumeCounter> _logger;
-
-    public GetResumeCounter(ILogger<GetResumeCounter> logger)
+    public class GetResumeCounter
     {
-        _logger = logger;
-    }
+        private readonly ILogger _logger;
+        private readonly CosmosClient _cosmosClient;
+        private readonly Container _container;
 
-    [Function("GetResumeCounter")]
-    public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequest req)
-    {
-        _logger.LogInformation("C# HTTP trigger function processed a request.");
-        return new OkObjectResult("Welcome to Azure Functions!");
+        public GetResumeCounter(ILoggerFactory loggerFactory)
+        {
+            _logger = loggerFactory.CreateLogger<GetResumeCounter>();
+
+            _cosmosClient = new CosmosClient(Environment.GetEnvironmentVariable("AzureResumeConnectionString"));
+            _container = _cosmosClient.GetDatabase("resumeapidb").GetContainer("Counter");
+        }
+
+        [Function("GetResumeCounter")]
+        public async Task<HttpResponseData> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "getresumecounter")]
+            HttpRequestData req,
+            FunctionContext context)
+        {
+            _logger.LogInformation("Resume counter function triggered.");
+
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Content-Type", "application/json");
+
+            try
+            {
+                var itemResponse = await _container.ReadItemAsync<dynamic>("visitor-counter-id", new PartitionKey("visitor-counter-pk"));
+                var count = itemResponse.Resource.count;
+                response.WriteString($"{{ \"count\": {count} }}");
+            }
+            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+            {
+                response.WriteString("{ \"count\": 0 }");
+            }
+            return response;
+        }
     }
 }

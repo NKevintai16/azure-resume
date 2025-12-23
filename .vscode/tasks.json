@@ -17,7 +17,7 @@
 			"command": "dotnet",
 			"args": [
 				"clean",
-				"/property:GenerateFullPaths=true",
+				"/p:GenerateFullPaths=true",
 				"/consoleloggerparameters:NoSummary"
 			],
 			"type": "process",
@@ -31,7 +31,7 @@
 			"command": "dotnet",
 			"args": [
 				"build",
-				"/property:GenerateFullPaths=true",
+				"/p:GenerateFullPaths=true",
 				"/consoleloggerparameters:NoSummary"
 			],
 			"type": "process",
@@ -52,7 +52,7 @@
 				"clean",
 				"--configuration",
 				"Release",
-				"/property:GenerateFullPaths=true",
+				"/p:GenerateFullPaths=true",
 				"/consoleloggerparameters:NoSummary"
 			],
 			"type": "process",
@@ -68,7 +68,7 @@
 				"publish",
 				"--configuration",
 				"Release",
-				"/property:GenerateFullPaths=true",
+				"/p:GenerateFullPaths=true",
 				"/consoleloggerparameters:NoSummary"
 			],
 			"type": "process",
@@ -80,9 +80,10 @@
 		},
 		{
 			"type": "func",
+			"label": "func: host start",
 			"dependsOn": "build (functions)",
 			"options": {
-				"cwd": "${workspaceFolder}/backend\\api/bin/Debug/net8.0"
+				"cwd": "${workspaceFolder}/backend\\api"
 			},
 			"command": "host start",
 			"isBackground": true,
